@@ -121,6 +121,9 @@ class VideoCodecContext(CodecContext):
         CodecContext._setup_decoded_frame(self, frame, packet)
         vframe: VideoFrame = frame
         vframe._init_user_attributes()
+        if not self.reformatter:
+            self.reformatter = VideoReformatter()
+        vframe.reformatter = self.reformatter
 
     @cython.cfunc
     def _transfer_hwframe(self, frame: Frame):
